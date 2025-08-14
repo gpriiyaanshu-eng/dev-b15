@@ -1,0 +1,120 @@
+#birthday-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    circle at 20% 10%,
+    rgba(255, 245, 230, 1.0),
+    rgba(255, 235, 230, 1.0)
+  );
+  z-index: 2147483647;
+  font-family: "Georgia", serif;
+}
+
+.envelope {
+  width: min(90%, 720px);
+  height: 420px;
+  position: relative;
+  perspective: 1200px;
+}
+
+/* Vintage paper texture for envelope body */
+.envelope-body {
+  background: url("https://i.imgur.com/VhVpKVE.jpg") repeat;
+  background-size: cover;
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(10px);
+  transition: transform var(--flap-speed, 1s) cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.envelope-flap {
+  background: url("https://i.imgur.com/VhVpKVE.jpg") repeat;
+  background-size: cover;
+  height: 150px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #5b2c12;
+  transform-origin: top center;
+  transition: transform var(--flap-speed, 1s) cubic-bezier(0.2, 0.9, 0.3, 1);
+  position: relative;
+}
+
+/* Add a postal stamp on flap */
+.envelope-flap::after {
+  content: "";
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 50px;
+  height: 50px;
+  background: url("https://i.imgur.com/E3lM1DN.png") no-repeat center/contain;
+  opacity: 0.8;
+}
+
+.open-btn {
+  margin-top: 12px;
+  padding: 12px 26px;
+  background: #b55c3b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#birthday-overlay.opening .envelope-flap {
+  transform: rotateX(-180deg);
+}
+#birthday-overlay.opening .envelope-body {
+  transform: translateY(0);
+}
+
+#birthday-overlay.reveal {
+  animation: overlayFade 0.8s ease 1 forwards;
+}
+@keyframes overlayFade {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+    visibility: hidden;
+  }
+}
+
+/* Confetti styles remain same as before */
+#confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10vh;
+  animation: confettiFall var(--fall) linear var(--delay) forwards;
+}
+.confetti-inner {
+  width: 10px;
+  height: 14px;
+  animation: confettiSpin var(--spin) linear var(--delay) infinite;
+}
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) translateX(var(--x));
+  }
+}
+@keyframes confettiSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
